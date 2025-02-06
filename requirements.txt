@@ -1,0 +1,17 @@
+pillow
+prettier
+duckdb
+markdown2
+fastapi
+uvicorn
+python-multipart
+httpx
+python-dotenv
+aiofiles
+nodejs
+python-dateutil
+pytesseract
+numpy
+requests
+beautifulsoup4
+gitpython
