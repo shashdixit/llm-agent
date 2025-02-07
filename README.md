@@ -20,3 +20,8 @@ This project implements an intelligent automation agent that can handle various 
 2. Install dependencies:
 ```bash
 pip install -r requirements.txt
+
+## Run
+
+```sh
+python run.py

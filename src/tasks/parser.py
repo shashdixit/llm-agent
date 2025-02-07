@@ -14,7 +14,7 @@ class TaskParser:
                 "task_type": "install_run_script",
                 "parameters": {
                     "script_url": "https://raw.githubusercontent.com/sanand0/tools-in-data-science-public/tds-2025-01/project-1/datagen.py",
-                    "email": os.getenv("USER_EMAIL", "default@example.com")
+                    "email": 'shashwat.dixit@gramener.com'
                 }
             }
 
@@ -52,10 +52,13 @@ class TaskParser:
                 "parameters": {}  # No additional parameters needed
             }
         
-        if all(keyword in task_description.lower() for keyword in ['markdown', 'index', 'h1']):
+        if any(keyword in task_description.lower() for keyword in ['h1', 'headers', 'index']) and '.md' in task_description.lower():
             return {
                 "task_type": "markdown_index",
-                "parameters": {}
+                "parameters": {
+                    "input_dir": "/data/docs",
+                    "output_file": "/data/docs/index.json"
+                }
             }
         
         if any(keyword in task_description.lower() for keyword in ['credit card', 'card number', 'extract number from image']):

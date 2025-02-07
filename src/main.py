@@ -6,6 +6,8 @@ from src.tasks.executor import TaskExecutor
 from src.utils.security import SecurityCheck
 from src.utils.file_ops import FileOps
 import logging
+import uvicorn
+from .config import SSL_KEYFILE, SSL_CERTFILE, API_PORT, API_HOST
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -54,6 +56,10 @@ async def read_file(path: str = Query(..., description="File path to read")):
         # Remove any quotes and normalize path
         path = path.strip("'\"")
         
+        # Normalize path to handle leading slashes
+        if path.startswith('/'):
+            path = path.lstrip('/')
+        
         # Security check
         if not security.is_path_allowed(path):
             raise HTTPException(
@@ -63,7 +69,7 @@ async def read_file(path: str = Query(..., description="File path to read")):
             
         try:
             content = await file_ops.read_file(path)
-            return content
+            return {"content": content}
         except FileNotFoundError:
             raise HTTPException(
                 status_code=404, 
@@ -78,5 +84,11 @@ async def read_file(path: str = Query(..., description="File path to read")):
         )
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8009)
+    uvicorn.run(
+        app,
+        host=API_HOST,
+        port=API_PORT,
+        ssl_keyfile=SSL_KEYFILE,
+        ssl_certfile=SSL_CERTFILE,
+        reload=True
+    )

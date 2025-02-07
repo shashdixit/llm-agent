@@ -1,36 +1,19 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM python:3.9
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
-# Set working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    nodejs \
-    npm \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Python dependencies
+# Copy requirements first for better caching
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Install prettier globally
-RUN npm install -g prettier@3.4.2
+RUN pip install -r requirements.txt
 
 # Copy the rest of the application
 COPY . .
 
-# Expose the port the app runs on
+# Generate SSL certificates
+RUN openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365 -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost"
+
+# Expose the HTTPS port
 EXPOSE 8000
 
-# Set environment variable for AI Proxy Token (to be passed at runtime)
-ENV AIPROXY_TOKEN=""
-ENV USER_EMAIL=""
-
 # Command to run the application
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "run.py"]
