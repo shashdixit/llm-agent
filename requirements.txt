@@ -10,8 +10,9 @@ python-dotenv
 aiofiles
 nodejs
 python-dateutil
-pytesseract
 numpy
 requests
 beautifulsoup4
 gitpython
+faker
+npm
