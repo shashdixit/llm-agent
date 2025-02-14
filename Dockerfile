@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
     nodejs \
     npm \
     git \
-    tesseract-ocr \
     && rm -rf /var/lib/apt/lists/*
 
 # Install prettier globally using npm
@@ -29,11 +28,6 @@ RUN mkdir -p /app/data
 
 # Expose port
 EXPOSE 8000
-
-# Set environment variables
-ENV PYTHONPATH=/app
-ENV API_HOST=0.0.0.0
-ENV API_PORT=8000
 
 # Command to run the application
 CMD ["python", "run.py"]

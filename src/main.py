@@ -1,6 +1,7 @@
 # src/main.py
 
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware  # Import CORS middleware
 from src.tasks.parser import TaskParser
 from src.tasks.executor import TaskExecutor
 from src.utils.security import SecurityCheck
@@ -18,6 +19,15 @@ parser = TaskParser()
 executor = TaskExecutor()
 security = SecurityCheck()
 file_ops = FileOps()
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
+)
 
 @app.post("/run")
 async def run_task(task: str = Query(..., description="Task description")):
