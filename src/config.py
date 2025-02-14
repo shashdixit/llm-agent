@@ -6,12 +6,7 @@ load_dotenv()
 
 # API Configuration
 API_HOST = "127.0.0.1"  # Changed to allow external access
-API_PORT = 8000  # Standard HTTPS port
-
-# SSL Configuration (for development)
-SSL_ENABLED = True
-SSL_KEYFILE = os.path.join(os.path.dirname(__file__), "..", "key.pem")
-SSL_CERTFILE = os.path.join(os.path.dirname(__file__), "..", "cert.pem")
+API_PORT = 8005  # Standard HTTPS port
 
 # LLM Configuration
 AIPROXY_TOKEN = os.getenv("AIPROXY_TOKEN")

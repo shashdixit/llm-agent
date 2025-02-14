@@ -2,10 +2,7 @@
 import uvicorn
 from src.config import (
     API_HOST, 
-    API_PORT, 
-    SSL_ENABLED, 
-    SSL_KEYFILE, 
-    SSL_CERTFILE
+    API_PORT
 )
 
 if __name__ == "__main__":
@@ -15,11 +12,5 @@ if __name__ == "__main__":
         "port": API_PORT,
         "reload": True,
     }
-    
-    if SSL_ENABLED:
-        config.update({
-            "ssl_keyfile": SSL_KEYFILE,
-            "ssl_certfile": SSL_CERTFILE
-        })
     
     uvicorn.run(**config)

@@ -7,7 +7,7 @@ from src.utils.security import SecurityCheck
 from src.utils.file_ops import FileOps
 import logging
 import uvicorn
-from .config import SSL_KEYFILE, SSL_CERTFILE, API_PORT, API_HOST
+from .config import API_PORT, API_HOST
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -88,7 +88,5 @@ if __name__ == "__main__":
         app,
         host=API_HOST,
         port=API_PORT,
-        ssl_keyfile=SSL_KEYFILE,
-        ssl_certfile=SSL_CERTFILE,
         reload=True
     )
